@@ -45,3 +45,32 @@ function getHumanChoice() {
     const choice = prompt("Choose rock, paper, or scissors:").toLowerCase();
     return choice;
 }
+
+// Step 5:
+function playRound(humanChoice, computerChoice) {
+    // Make humanChoice case-insensitive
+    humanChoice = humanChoice.toLowerCase();
+    
+    // Determine the winner
+    if (humanChoice === computerChoice) {
+        console.log(`Tie! Both chose ${humanChoice}`);
+    } else if (
+        (humanChoice === 'rock' && computerChoice === 'scissors') ||
+        (humanChoice === 'paper' && computerChoice === 'rock') ||
+        (humanChoice === 'scissors' && computerChoice === 'paper')
+    ) {
+        humanScore++;
+        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+    } else {
+        computerScore++;
+        console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+    }
+}
+
+// Example usage:
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+playRound(humanSelection, computerSelection);
+
+// Check updated scores
+console.log(`Scores - You: ${humanScore}, Computer: ${computerScore}`);
