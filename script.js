@@ -1,4 +1,7 @@
+// Step 1:
 console.log("Hello World");
+
+// Step 2:
 function getComputerChoice() {
     // Generate a random number between 0 and 1
     const randomNum = Math.random();
@@ -15,3 +18,13 @@ function getComputerChoice() {
 
 // Test the function
 console.log(getComputerChoice()); // Randomly logs "rock", "paper", or "scissors"
+
+// Step 3:
+function getHumanChoice() {
+    // Prompt the user for their choice
+    const choice = prompt("Choose rock, paper, or scissors:").toLowerCase();
+    return choice;
+}
+
+// Test the function
+console.log(getHumanChoice()); // Logs whatever the user enters (e.g., "rock")
