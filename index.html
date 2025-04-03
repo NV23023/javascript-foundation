@@ -3,11 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Console Game</title>
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .game-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        button.choice {
+            background: none;
+            border: 3px solid #333;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button.choice:hover {
+            transform: scale(1.1);
+            background: #e0e0e0;
+        }
+        #result {
+            min-height: 100px;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 18px;
+            white-space: pre-line;
+        }
+        .scores {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .score-box {
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        #human-score {
+            background: #e3f2fd;
+        }
+        #computer-score {
+            background: #ffebee;
+        }
+        #game-history {
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Open the browser console to play!</h1>
-    
-    <script src="script.js"></script>
+    <div class="game-container">
+        <h1>🎮 Rock Paper Scissors</h1>
+        <p>First to win 5 rounds wins the game!</p>
+        
+        <div class="choices">
+            <button class="choice" onclick="playRound('rock')">✊</button>
+            <button class="choice" onclick="playRound('paper')">✋</button>
+            <button class="choice" onclick="playRound('scissors')">✌️</button>
+        </div>
+        
+        <div id="result">Make your selection to begin!</div>
+        
+        <div class="scores">
+            <div class="score-box" id="human-score">You: 0</div>
+            <div class="score-box" id="computer-score">Computer: 0</div>
+        </div>
+        
+        <div id="game-history"></div>
+    </div>
+
+    <script>
+        // Game state
+        const scores = { human: 0, computer: 0 };
+        const gameHistory = [];
+        
+        // DOM elements
+        const resultDiv = document.getElementById('result');
+        const humanScoreDiv = document.getElementById('human-score');
+        const computerScoreDiv = document.getElementById('computer-score');
+        const historyDiv = document.getElementById('game-history');
+        
+        function getComputerChoice() {
+            const randomNum = Math.random();
+            return randomNum < 0.33 ? 'rock' : 
+                   randomNum < 0.66 ? 'paper' : 'scissors';
+        }
+        
+        function playRound(humanChoice) {
+            const computerChoice = getComputerChoice();
+            const roundResult = determineWinner(humanChoice, computerChoice);
+            
+            // Update scores
+            if (roundResult === 'human') scores.human++;
+            if (roundResult === 'computer') scores.computer++;
+            
+            // Update display
+            updateDisplay(humanChoice, computerChoice, roundResult);
+            
+            // Check for game winner
+            if (scores.human >= 5 || scores.computer >= 5) {
+                endGame();
+            }
+        }
+        
+        function determineWinner(human, computer) {
+            if (human === computer) return 'tie';
+            
+            const winConditions = {
+                rock: 'scissors',
+                paper: 'rock',
+                scissors: 'paper'
+            };
+            
+            return winConditions[human] === computer ? 'human' : 'computer';
+        }
+        
+        function updateDisplay(human, computer, result) {
+            // Emoji mapping
+            const emojis = {
+                rock: '✊',
+                paper: '✋',
+                scissors: '✌️'
+            };
+            
+            // Result message
+            let message = `You chose ${emojis[human]} vs Computer chose ${emojis[computer]}\n`;
+            
+            if (result === 'tie') {
+                message += "It's a tie!";
+            } else if (result === 'human') {
+                message += `You win! ${human} beats ${computer}`;
+            } else {
+                message += `You lose! ${computer} beats ${human}`;
+            }
+            
+            resultDiv.textContent = message;
+            
+            // Update scores
+            humanScoreDiv.textContent = `You: ${scores.human}`;
+            computerScoreDiv.textContent = `Computer: ${scores.computer}`;
+            
+            // Add to history
+            gameHistory.push(message);
+            historyDiv.innerHTML = gameHistory.map(entry => 
+                `<div class="history-entry">${entry}</div>`
+            ).join('');
+            historyDiv.scrollTop = historyDiv.scrollHeight;
+        }
+        
+        function endGame() {
+            let finalMessage = `\nGAME OVER - `;
+            
+            if (scores.human > scores.computer) {
+                finalMessage += `YOU WIN ${scores.human}-${scores.computer}! 🎉`;
+            } else {
+                finalMessage += `COMPUTER WINS ${scores.human}-${scores.computer} 😢`;
+            }
+            
+            resultDiv.textContent += finalMessage;
+            
+            // Disable buttons
+            document.querySelectorAll('.choice').forEach(button => {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+            });
+            
+            // Add restart button
+            const restartBtn = document.createElement('button');
+            restartBtn.textContent = 'Play Again';
+            restartBtn.style = `
+                padding: 10px 20px;
+                font-size: 18px;
+                margin-top: 20px;
+                background: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            `;
+            restartBtn.onclick = restartGame;
+            resultDiv.appendChild(restartBtn);
+        }
+        
+        function restartGame() {
+            // Reset scores
+            scores.human = 0;
+            scores.computer = 0;
+            gameHistory.length = 0;
+            
+            // Reset display
+            resultDiv.textContent = 'Make your selection to begin!';
+            humanScoreDiv.textContent = 'You: 0';
+            computerScoreDiv.textContent = 'Computer: 0';
+            historyDiv.innerHTML = '';
+            
+            // Enable buttons
+            document.querySelectorAll('.choice').forEach(button => {
+                button.disabled = false;
+                button.style.opacity = '1';
+            });
+            
+            // Remove restart button if exists
+            const oldBtn = document.querySelector('#restart-btn');
+            if (oldBtn) oldBtn.remove();
+        }
+    </script>
 </body>
 </html>
