@@ -70,7 +70,8 @@ function playGame() {
         playRound(round);
         console.log(`📊 Score: You ${scores.human} - ${scores.computer} Computer`);
     }
-    
+
+   
     // Final result
     console.log("\n================");
     console.log("  FINAL RESULT");
