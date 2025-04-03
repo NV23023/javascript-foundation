@@ -17,7 +17,7 @@ function getComputerChoice() {
 }
 
 // Test the function
-console.log(getComputerChoice()); // Randomly logs "rock", "paper", or "scissors"
+console.log(getComputerChoice());
 
 // Step 3:
 function getHumanChoice() {
@@ -27,4 +27,4 @@ function getHumanChoice() {
 }
 
 // Test the function
-console.log(getHumanChoice()); // Logs whatever the user enters (e.g., "rock")
+console.log(getHumanChoice());
