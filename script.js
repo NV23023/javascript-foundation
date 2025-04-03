@@ -33,6 +33,9 @@ console.log(getHumanChoice());
 let humanScore = 0;
 let computerScore = 0;
 
+// Debug: Log when script loads
+console.log("Script loaded! Scores:", humanScore, computerScore);
+
 // (Keep your existing functions below)
 function getComputerChoice() {
     const randomNum = Math.random();
