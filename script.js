@@ -7,6 +7,7 @@ function getComputerChoice() {
     if (randomNum < 0.33) return "rock";
     else if (randomNum < 0.66) return "paper";
     else return "scissors";
+}
 
 // Step 3:
 function getHumanChoice() {
@@ -16,19 +17,6 @@ function getHumanChoice() {
 // Step 4:
 let humanScore = 0;
 let computerScore = 0;
-
-// (Keep your existing functions below)
-function getComputerChoice() {
-    const randomNum = Math.random();
-    if (randomNum < 0.33) return "rock";
-    else if (randomNum < 0.66) return "paper";
-    else return "scissors";
-}
-
-function getHumanChoice() {
-    const choice = prompt("Choose rock, paper, or scissors:").toLowerCase();
-    return choice;
-}
 
 // Step 5:
 function playRound(humanChoice, computerChoice) {
