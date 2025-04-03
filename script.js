@@ -3,31 +3,15 @@ console.log("Hello World");
 
 // Step 2:
 function getComputerChoice() {
-    // Generate a random number between 0 and 1
     const randomNum = Math.random();
-    
-    // Return "rock", "paper", or "scissors" based on the random number
-    if (randomNum < 0.33) {
-        return "rock";
-    } else if (randomNum < 0.66) {
-        return "paper";
-    } else {
-        return "scissors";
-    }
-}
-
-// Test the function
-console.log(getComputerChoice());
+    if (randomNum < 0.33) return "rock";
+    else if (randomNum < 0.66) return "paper";
+    else return "scissors";
 
 // Step 3:
 function getHumanChoice() {
-    // Prompt the user for their choice
-    const choice = prompt("Choose rock, paper, or scissors:").toLowerCase();
-    return choice;
+    return prompt("Choose rock, paper, or scissors:").toLowerCase();
 }
-
-// Test the function
-console.log(getHumanChoice());
 
 // Step 4:
 let humanScore = 0;
@@ -48,10 +32,7 @@ function getHumanChoice() {
 
 // Step 5:
 function playRound(humanChoice, computerChoice) {
-    // Make humanChoice case-insensitive
     humanChoice = humanChoice.toLowerCase();
-    
-    // Determine the winner
     if (humanChoice === computerChoice) {
         console.log(`Tie! Both chose ${humanChoice}`);
     } else if (
@@ -67,10 +48,8 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-// Example usage:
+// Execute ONE round (only one prompt will appear)
 const humanSelection = getHumanChoice();
 const computerSelection = getComputerChoice();
 playRound(humanSelection, computerSelection);
-
-// Check updated scores
 console.log(`Scores - You: ${humanScore}, Computer: ${computerScore}`);
