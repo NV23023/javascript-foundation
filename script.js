@@ -29,7 +29,19 @@ function getHumanChoice() {
 // Test the function
 console.log(getHumanChoice());
 
-// To make functions always available
-window.getHumanChoice = function() {
-    return prompt("Choose rock, paper, or scissors:").toLowerCase();
-};
+// Step 4:
+let humanScore = 0;
+let computerScore = 0;
+
+// (Keep your existing functions below)
+function getComputerChoice() {
+    const randomNum = Math.random();
+    if (randomNum < 0.33) return "rock";
+    else if (randomNum < 0.66) return "paper";
+    else return "scissors";
+}
+
+function getHumanChoice() {
+    const choice = prompt("Choose rock, paper, or scissors:").toLowerCase();
+    return choice;
+}
