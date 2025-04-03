@@ -28,3 +28,8 @@ function getHumanChoice() {
 
 // Test the function
 console.log(getHumanChoice());
+
+// To make functions always available
+window.getHumanChoice = function() {
+    return prompt("Choose rock, paper, or scissors:").toLowerCase();
+};
